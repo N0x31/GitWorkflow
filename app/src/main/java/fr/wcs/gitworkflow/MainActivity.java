@@ -1,9 +1,12 @@
 package fr.wcs.gitworkflow;
 
+import android.content.Intent;
 import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,28 +24,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final TextView test = (TextView) findViewById(R.id.test);
-
-        // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-
-       //myRef.push().setValue("Hello, World!");
-
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        Button googleButton = (Button)findViewById(R.id.googleMapButton);
+        googleButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                    String hello = dsp.getValue(String.class);
-                    test.setText(hello);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ActivityGoogleMaps.class);
+                startActivity(intent);
             }
         });
-
     }
 }
